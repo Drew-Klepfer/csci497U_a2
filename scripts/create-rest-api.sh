@@ -4,7 +4,7 @@ source env.sh
 
 echo "Creating REST API"
 REST_API_ID=$(aws apigateway create-rest-api \
-  --name 'Turn-based API' \
+  --name 'Tic-tac-toe API' \
   --query 'id' \
   --output text)
 

@@ -5,6 +5,7 @@ const sendMessage = require('./sendMessage')
 
 const handlePostMoveNotification = async ({ game, mover, opponent }) => {
   // Handle when game is finished
+  /* use tic-tac-toe logic to check winning possibilities */
   if (game.heap1 == 0 && game.heap2 == 0 && game.heap3 == 0) {
     const winnerMessage = `You beat ${mover.username} in a game of Nim!`
     const loserMessage = `Ahh, you lost to ${opponent.username} in Nim.`
