@@ -7,14 +7,20 @@ const sendMessage = require("./sendMessage");
 
 const createGame = async ({ creator, opponent }) => {
   const params = {
-    TableName: "turn-based-game",
+    TableName: "tic-tac-toe",
     Item: {
       gameId: uuidv4().split('-')[0],
       user1: creator,
       user2: opponent.username,
-      heap1: 5,
-      heap2: 4,
-      heap3: 5,
+      gb1: null,
+      gb2: null,
+      gb3: null,
+      gb4: null,
+      gb5: null,
+      gb6: null,
+      gb7: null,
+      gb8: null,
+      gb9: null,
       lastMoveBy: creator
     }
   };

@@ -4,14 +4,20 @@ const AWS = require('aws-sdk')
 const documentClient = new AWS.DynamoDB.DocumentClient()
 
 const params = {
-  TableName: 'turn-based-game',
+  TableName: 'tic-tac-toe',
   Item: {
     gameId: '5b5ee7d8',
     user1: 'myfirstuser',
     user2: 'theseconduser',
-    heap1: 5,
-    heap2: 4,
-    heap3: 5,
+    gb1: null,
+    gb2: null,
+    gb3: null,
+    gb4: null,
+    gb5: null,
+    gb6: null,
+    gb7: null,
+    gb8: null,
+    gb9: null,
     lastMoveBy: 'myfirstuser'
   }
 }

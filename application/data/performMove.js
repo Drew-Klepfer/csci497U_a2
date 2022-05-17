@@ -8,7 +8,7 @@ const performMove = async ({ gameId, user, changedHeap, changedHeapValue }) => {
     throw new Error("Cannot set heap value below 0");
   }
   const params = {
-    TableName: "turn-based-game",
+    TableName: "tic-tac-toe",
     Key: {
       gameId: gameId
     },

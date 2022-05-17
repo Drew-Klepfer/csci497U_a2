@@ -5,7 +5,7 @@ const documentClient = new AWS.DynamoDB.DocumentClient();
 
 const fetchGame = async gameId => {
   const params = {
-    TableName: "turn-based-game",
+    TableName: "tic-tac-toe",
     Key: {
       gameId: gameId
     }
