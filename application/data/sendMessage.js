@@ -1,15 +1,28 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 const AWS = require("aws-sdk");
-const sns = new AWS.SNS();
+//const sns = new AWS.SNS();
+const ses = new AWS.SES();
 
-const sendMessage = async ({ phoneNumber, message }) => {
+const sendMessage = async ({ sourceEmail, destEmail, message }) => {
   const params = {
-    Message: message,
-    PhoneNumber: phoneNumber
+    Destination: {
+      ToAddress: destEmail
+    },
+    Message: {
+      Body: {
+        Text: {
+          Data: message
+        },
+      },
+      Subject: {
+        Data: 'Tic-tac-toe game'
+      }
+    },
+    Source: sourceEmail
   };
 
-  return sns.publish(params).promise();
+  return ses.sendEmail(params).promise();
 };
 
 module.exports = sendMessage;

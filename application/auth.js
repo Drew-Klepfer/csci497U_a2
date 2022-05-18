@@ -11,42 +11,36 @@ const client = jwksClient({
   jwksUri: `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.USER_POOL_ID}/.well-known/jwks.json`
 });
 
-const createCognitoUser = async (username, password, email, phoneNumber) => {
+const createCognitoUser = async (password, email) => {
   const signUpParams = {
     ClientId: process.env.COGNITO_CLIENT_ID,
-    Username: username,
+    Email: email,
     Password: password,
     UserAttributes: [
       {
         Name: "email",
         Value: email
-      },
-      {
-        Name: "phone_number",
-        Value: phoneNumber
       }
     ]
   };
   await cognitoidentityserviceprovider.signUp(signUpParams).promise();
   const confirmParams = {
     UserPoolId: process.env.USER_POOL_ID,
-    Username: username
+    Email: email
   };
   await cognitoidentityserviceprovider.adminConfirmSignUp(confirmParams).promise();
   return {
-    username,
-    email,
-    phoneNumber
+    email
   };
 };
 
-const login = async (username, password) => {
+const login = async (email, password) => {
   const params = {
     ClientId: process.env.COGNITO_CLIENT_ID,
     UserPoolId: process.env.USER_POOL_ID,
     AuthFlow: "ADMIN_NO_SRP_AUTH",
     AuthParameters: {
-      USERNAME: username,
+      EMAIL: email,
       PASSWORD: password
     }
   };
@@ -56,16 +50,14 @@ const login = async (username, password) => {
   return idToken;
 };
 
-const fetchUserByUsername = async username => {
+const fetchUserByEmail = async email => {
   const params = {
     UserPoolId: process.env.USER_POOL_ID,
-    Username: username
+    Email: email
   };
   const user = await cognitoidentityserviceprovider.adminGetUser(params).promise();
-  const phoneNumber = user.UserAttributes.filter(attribute => attribute.Name === "phone_number")[0].Value;
   return {
-    username,
-    phoneNumber
+    username
   };
 };
 
@@ -90,6 +82,6 @@ const verifyToken = async idToken => {
 module.exports = {
   createCognitoUser,
   login,
-  fetchUserByUsername,
+  fetchUserByEmail,
   verifyToken
 };

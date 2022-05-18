@@ -6,7 +6,7 @@ const { createGame, fetchGame, performMove, handlePostMoveNotification } = requi
 const {
   createCognitoUser,
   login,
-  fetchUserByUsername,
+  fetchUserByEmail,
   verifyToken
 } = require("./auth");
 const { validateCreateUser, validateCreateGame, validatePerformMove } = require("./validate");
@@ -21,7 +21,7 @@ function wrapAsync(fn) {
 }
 // Login
 app.post("/login", wrapAsync(async (req, res) => {
-  const idToken = await login(req.body.username, req.body.password);
+  const idToken = await login(req.body.email, req.body.password);
   res.json({ idToken });
 }));
 
@@ -32,10 +32,8 @@ app.post("/users", wrapAsync(async (req, res) => {
     throw new Error(validated.message);
   }
   const user = await createCognitoUser(
-    req.body.username,
     req.body.password,
     req.body.email,
-    req.body.phoneNumber
   );
   res.json(user);
 }));
@@ -47,9 +45,9 @@ app.post("/games", wrapAsync(async (req, res) => {
     throw new Error(validated.message);
   }
   const token = await verifyToken(req.header("Authorization"));
-  const opponent = await fetchUserByUsername(req.body.opponent);
+  const opponent = await fetchUserByEmail(req.body.opponent);
   const game = await createGame({
-    creator: token["cognito:username"],
+    creator: token["cognito:email"],
     opponent: opponent
   });
   res.json(game);
@@ -67,23 +65,24 @@ app.post("/games/:gameId", wrapAsync(async (req, res) => {
   if (!validated.valid) {
     throw new Error(validated.message);
   }
+
   const token = await verifyToken(req.header("Authorization"));
+
   const game = await performMove({
     gameId: req.params.gameId,
-    user: token["cognito:username"],
-    changedHeap: req.body.changedHeap,
-    changedHeapValue: req.body.changedHeapValue
+    user: token["cognito:email"],
+    changedHeap: req.body.changedHeap,//change
+    changedHeapValue: req.body.changedHeapValue//change
   });
-  let opponentUsername
+  let opponentEmail
   if (game.user1 !== game.lastMoveBy) {
-    opponentUsername = game.user1
+    opponentEmail = game.user1
   } else {
-    opponentUsername = game.user2
+    opponentEmail = game.user2
   }
-  const opponent = await fetchUserByUsername(opponentUsername);
+  const opponent = await fetchUserByEmail(opponentEmail);
   const mover = {
-    username: token['cognito:username'],
-    phoneNumber: token['phone_number']
+    email: token['cognito:email']
   }
   await handlePostMoveNotification({ game, mover, opponent })
   res.json(game);
