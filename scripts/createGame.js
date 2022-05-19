@@ -9,6 +9,7 @@ const params = {
     gameId: '5b5ee7d8',
     user1: 'myfirstuser',
     user2: 'theseconduser',
+    gb0: null,
     gb1: null,
     gb2: null,
     gb3: null,
@@ -17,7 +18,6 @@ const params = {
     gb6: null,
     gb7: null,
     gb8: null,
-    gb9: null,
     lastMoveBy: 'myfirstuser'
   }
 }

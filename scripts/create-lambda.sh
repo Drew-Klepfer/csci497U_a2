@@ -7,7 +7,7 @@ zip -rq application.zip application/
 
 echo "Creating IAM role"
 ROLE_ARN=$(aws iam create-role \
-  --role-name Cloud9-turn-based-api-lambda-role \
+  --role-name Cloud9-tic-tac-toe-api-lambda-role \
   --assume-role-policy-document '{
       "Version": "2012-10-17",
       "Statement": [
@@ -25,7 +25,7 @@ ROLE_ARN=$(aws iam create-role \
 
 echo "Adding policy to IAM role"
 POLICY=$(aws iam put-role-policy \
-  --role-name Cloud9-turn-based-api-lambda-role \
+  --role-name Cloud9-tic-tac-toe-api-lambda-role \
   --policy-name lambda-policy \
   --policy-document '{
     "Version": "2012-10-17",
@@ -61,7 +61,7 @@ echo "Sleeping for IAM role propagation"
 sleep 10
 echo "Creating Lambda function"
 FUNCTION_ARN=$(aws lambda create-function \
-  --function-name turn-based-api \
+  --function-name tic-tac-toe-api \
   --runtime nodejs14.x \
   --role ${ROLE_ARN} \
   --handler application/handler.handler \

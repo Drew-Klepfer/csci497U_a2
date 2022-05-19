@@ -4,7 +4,7 @@ source env.sh
 
 echo "Creating REST API"
 REST_API_ID=$(aws apigateway create-rest-api \
-  --name 'Tic-tac-toe API' \
+  --name 'tic-tac-toe API' \
   --query 'id' \
   --output text)
 
@@ -50,7 +50,7 @@ ACCOUNT_ID=$(aws sts get-caller-identity \
 
 echo "Adding lambda permission"
 PERMISSION=$(aws lambda add-permission \
-  --function-name turn-based-api \
+  --function-name tic-tac-toe-api \
   --statement-id api-gateway \
   --action lambda:InvokeFunction \
   --principal apigateway.amazonaws.com \
