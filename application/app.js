@@ -68,10 +68,18 @@ app.post("/games/:gameId", wrapAsync(async (req, res) => {
 
   const token = await verifyToken(req.header("Authorization"));
 
+  if (user == user1) {
+    playerMark = 'X'
+  }
+  else{
+    playerMark ='O'
+  }
+
   const game = await performMove({
     gameId: req.params.gameId,
     user: token["cognito:email"],
     changedIndex: req.body.changedIndex,//change
+    changedValue: playerMark
   });
   let opponentEmail
   if (game.user1 !== game.lastMoveBy) {
