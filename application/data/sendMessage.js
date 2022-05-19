@@ -7,7 +7,9 @@ const ses = new AWS.SES();
 const sendMessage = async ({ sourceEmail, destEmail, message }) => {
   const params = {
     Destination: {
-      ToAddress: destEmail
+      ToAddresses: [
+        destEmail
+      ]
     },
     Message: {
       Body: {
