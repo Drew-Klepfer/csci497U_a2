@@ -3,6 +3,7 @@
 const AWS = require("aws-sdk");
 //const sns = new AWS.SNS();
 const ses = new AWS.SES();
+AWS.config.update({region: 'us-west-2'})
 
 const sendMessage = async ({ sourceEmail, destEmail, message }) => {
   const params = {
