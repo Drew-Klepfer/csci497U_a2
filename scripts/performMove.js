@@ -3,17 +3,17 @@
 const AWS = require('aws-sdk')
 const documentClient = new AWS.DynamoDB.DocumentClient()
 
-const performMove = async ({ gameId, user, changedHeap, changedHeapValue }) => {
+const performMove = async ({ gameId, user, changedIndex}) => {
   if (changedHeapValue < 0 ) {
     throw new Error('Cannot set heap value below 0')
   }
   const params = {
-    TableName: 'turn-based-game',
+    TableName: 'tic-tac-toe',
     Key: { 
       gameId: gameId
     },
-    UpdateExpression: `SET lastMoveBy = :user, ${changedHeap} = :changedHeapValue`,
-    ConditionExpression: `(user1 = :user OR user2 = :user) AND lastMoveBy <> :user AND ${changedHeap} > :changedHeapValue`,
+    UpdateExpression: `SET lastMoveBy = :user, ${changedIndex} = :changedHeapValue`,
+    ConditionExpression: `(user1 = :user OR user2 = :user) AND lastMoveBy <> :user AND ${changedIndex} > :changedHeapValue`,
     ExpressionAttributeValues: {
       ':user': user,
       ':changedHeapValue': changedHeapValue,
