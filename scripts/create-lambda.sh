@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: MIT-0
 source env.sh
 
-echo "Building zip file"
-zip -rq application.zip application/
+#echo "Building zip file"
+#//zip -rq application.zip application/
 
 echo "Creating IAM role"
 ROLE_ARN=$(aws iam create-role \
