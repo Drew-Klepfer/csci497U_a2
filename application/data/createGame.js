@@ -12,7 +12,6 @@ const createGame = async ({ creator, opponent }) => {
       gameId: uuidv4().split('-')[0],
       user1: creator,
       user2: opponent.email,
-      gb0: null,
       gb1: null,
       gb2: null,
       gb3: null,
@@ -21,6 +20,7 @@ const createGame = async ({ creator, opponent }) => {
       gb6: null,
       gb7: null,
       gb8: null,
+      gb9: null,
       lastMoveBy: creator
     }
   };
