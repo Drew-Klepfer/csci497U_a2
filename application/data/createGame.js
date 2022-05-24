@@ -21,7 +21,8 @@ const createGame = async ({ creator, opponent }) => {
       gb7: null,
       gb8: null,
       gb9: null,
-      lastMoveBy: creator
+      lastMoveBy: creator,
+      playerMark: "X"
     }
   };
 

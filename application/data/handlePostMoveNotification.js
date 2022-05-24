@@ -7,27 +7,35 @@ const handlePostMoveNotification = async ({ game, mover, opponent }) => {
   /* use tic-tac-toe logic to check winning possibilities */
   var gameOver = 0;
 
+  //row 1
   if (game.gb1 == game.gb2 && game.gb1 == game.gb3) {
     gameOver = 1;
   } 
+  //row 2
   if (game.gb4 == game.gb5 && game.gb4 == game.gb6) {
     gameOver = 1;
   }  
+  //row 3
   if (game.gb7 == game.gb8 && game.gb7 == game.gb9) {
     gameOver = 1;
   } 
+  //column 1
   if (game.gb1 == game.gb4 && game.gb1 == game.gb7) {
     gameOver = 1;
   } 
+  //column 2
   if (game.gb2 == game.gb5 && game.gb2 == game.gb8) {
     gameOver = 1;
   } 
+  //column 3
   if (game.gb3 == game.gb6 && game.gb3 == game.gb9) {
     gameOver = 1;
   } 
+  //diagonal top left bottom right
   if (game.gb1 == game.gb5 && game.gb1 == game.gb9) {
     gameOver = 1;
   } 
+  //diagonal bottom left top right
   if (game.gb3 == game.gb5 && game.gb3 == game.gb7) {
     gameOver = 1;
   }
