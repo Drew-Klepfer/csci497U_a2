@@ -21,7 +21,7 @@ function wrapAsync(fn) {
 }
 // Login
 app.post("/login", wrapAsync(async (req, res) => {
-  const idToken = await login(req,body.username, req.body.password);
+  const idToken = await login(req.body.username, req.body.password);
   res.json({ idToken });
 }));
 

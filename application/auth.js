@@ -51,7 +51,7 @@ const login = async (username, password) => {
   return idToken;
 };
 
-const fetchUserByEmail = async email => {
+const fetchUserByEmail = async username => {
   const params = {
     UserPoolId: process.env.USER_POOL_ID,
     Username: username
