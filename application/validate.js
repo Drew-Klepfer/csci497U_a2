@@ -9,6 +9,7 @@ const extractError = error => {
 // Request body validation for the POST /users endpoint
 const validateCreateUser = body => {
   const schema = Joi.object().keys({
+    username: Joi.string().min(4).max(20).required(),
     email: Joi.string().email({ minDomainAtoms: 2 }).required(),
     password: Joi.string().min(8).max(20).required()
   });

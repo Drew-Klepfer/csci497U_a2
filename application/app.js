@@ -21,7 +21,7 @@ function wrapAsync(fn) {
 }
 // Login
 app.post("/login", wrapAsync(async (req, res) => {
-  const idToken = await login(req.body.email, req.body.password);
+  const idToken = await login(req,body.username, req.body.password);
   res.json({ idToken });
 }));
 
@@ -32,8 +32,9 @@ app.post("/users", wrapAsync(async (req, res) => {
     throw new Error(validated.message);
   }
   const user = await createCognitoUser(
+    req.body.username,
     req.body.password,
-    req.body.email,
+    req.body.email
   );
   res.json(user);
 }));

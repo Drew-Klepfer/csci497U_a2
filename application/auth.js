@@ -11,9 +11,10 @@ const client = jwksClient({
   jwksUri: `https://cognito-idp.${process.env.AWS_REGION}.amazonaws.com/${process.env.USER_POOL_ID}/.well-known/jwks.json`
 });
 
-const createCognitoUser = async (password, email) => {
+const createCognitoUser = async (username, password, email) => {
   const signUpParams = {
     ClientId: process.env.COGNITO_CLIENT_ID,
+    Username: username,
     Email: email,
     Password: password,
     UserAttributes: [
@@ -34,13 +35,13 @@ const createCognitoUser = async (password, email) => {
   };
 };
 
-const login = async (email, password) => {
+const login = async (username, password) => {
   const params = {
     ClientId: process.env.COGNITO_CLIENT_ID,
     UserPoolId: process.env.USER_POOL_ID,
     AuthFlow: "ADMIN_NO_SRP_AUTH",
     AuthParameters: {
-      EMAIL: email,
+      USERNAME: username,
       PASSWORD: password
     }
   };
