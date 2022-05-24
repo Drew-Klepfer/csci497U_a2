@@ -15,7 +15,6 @@ const createCognitoUser = async (username, password, email) => {
   const signUpParams = {
     ClientId: process.env.COGNITO_CLIENT_ID,
     Username: username,
-    Email: email,
     Password: password,
     UserAttributes: [
       {
@@ -27,10 +26,11 @@ const createCognitoUser = async (username, password, email) => {
   await cognitoidentityserviceprovider.signUp(signUpParams).promise();
   const confirmParams = {
     UserPoolId: process.env.USER_POOL_ID,
-    Email: email
+    Username: username
   };
   await cognitoidentityserviceprovider.adminConfirmSignUp(confirmParams).promise();
   return {
+    username,
     email
   };
 };
@@ -54,7 +54,7 @@ const login = async (username, password) => {
 const fetchUserByEmail = async email => {
   const params = {
     UserPoolId: process.env.USER_POOL_ID,
-    Email: email
+    Username: username
   };
   const user = await cognitoidentityserviceprovider.adminGetUser(params).promise();
   return {
