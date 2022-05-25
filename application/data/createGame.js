@@ -33,7 +33,7 @@ const createGame = async ({ creator, opponent }) => {
     throw new Error("Could not create game");
   }
 
-  const message = `Hi ${opponent.username}. Your friend ${creator} has invited you to a new game! Your game ID is ${params.Item.gameId}`;
+  const message = `Hi ${opponent.username}. Your friend ${creator.username} has invited you to a new game! Your game ID is ${params.Item.gameId}`;
   const source = `${creator.email}`;
   const dest = `${opponent.email}`;
   try {

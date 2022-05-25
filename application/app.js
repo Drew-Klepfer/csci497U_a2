@@ -40,8 +40,9 @@ app.post("/users", wrapAsync(async (req, res) => {
   res.json(user);
 }));
 
-// Create new game
+/* // Create new game
 app.post("/games", wrapAsync(async (req, res) => {
+  console.log("in post req to start game");
   const validated = validateCreateGame(req.body);
   if (!validated.valid) {
     console.log("inside app.js line 46");
@@ -49,10 +50,29 @@ app.post("/games", wrapAsync(async (req, res) => {
   }
   const token = await verifyToken(req.header("Authorization"));
   const opponent = await fetchUserByEmail(req.body.opponent);
+  
+
   console.log("opponent username: " + opponent.username);
   console.log("opponent email: " + opponent.email);
+
   const game = await createGame({
     creator: token["cognito:username"],
+    opponent: opponent
+  });
+  res.json(game);
+})); */
+
+// Create new game
+app.post("/games", wrapAsync(async (req, res) => {
+  const validated = validateCreateGame(req.body);
+  if (!validated.valid) {
+    throw new Error(validated.message);
+  }
+  const token = await verifyToken(req.header("Authorization"));
+  const opponent = await fetchUserByEmail(req.body.opponent);
+  const creator = await fetchUserByEmail(token["cognito:username"]);
+  const game = await createGame({
+    creator: creator,
     opponent: opponent
   });
   res.json(game);
@@ -94,7 +114,7 @@ app.post("/games/:gameId", wrapAsync(async (req, res) => {
   }
   const opponent = await fetchUserByEmail(opponentEmail);
   const mover = {
-    email: token['cognito:username']
+    username: token['cognito:username']
   }
   await handlePostMoveNotification({ game, mover, opponent })
   res.json(game);
