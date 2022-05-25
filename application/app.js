@@ -48,7 +48,7 @@ app.post("/games", wrapAsync(async (req, res) => {
   const token = await verifyToken(req.header("Authorization"));
   const opponent = await fetchUserByEmail(req.body.opponent);
   const game = await createGame({
-    creator: token["cognito:email"],
+    creator: token["cognito:username"],
     opponent: opponent
   });
   res.json(game);
