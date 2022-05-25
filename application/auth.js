@@ -58,7 +58,8 @@ const fetchUserByEmail = async username => {
   };
   const user = await cognitoidentityserviceprovider.adminGetUser(params).promise();
   return {
-    username
+    username,
+    email
   };
 };
 

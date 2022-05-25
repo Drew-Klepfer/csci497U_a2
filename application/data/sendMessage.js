@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT-0
 const AWS = require("aws-sdk");
 const ses = new AWS.SES();
-AWS.config.update({region: 'us-west-2'})
+AWS.config.update({ region: 'us-west-2' })
 
 const sendMessage = async ({ sourceEmail, destEmail, message }) => {
 
@@ -16,15 +16,11 @@ const sendMessage = async ({ sourceEmail, destEmail, message }) => {
 
   const params = {
     Destination: {
-      ToAddresses: [
-        receiverEmail
-      ]
+      ToAddresses: [receiverEmail]
     },
     Message: {
       Body: {
-        Text: {
-          Data: myMessage 
-        },
+        Text: { Data: myMessage },
       },
       Subject: {
         Data: 'Tic-tac-toe game'

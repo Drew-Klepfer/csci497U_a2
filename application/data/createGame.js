@@ -34,8 +34,13 @@ const createGame = async ({ creator, opponent }) => {
   }
 
   const message = `Hi ${opponent.username}. Your friend ${creator} has invited you to a new game! Your game ID is ${params.Item.gameId}`;
+  const source = `${creator.email}`;
+  const dest = `${opponent.email}`;
   try {
-    await sendMessage({ sourceEmail: `${creator.email}`, destEmail: `${opponent.email}`, message: message });
+    console.log("creator email: " + source);
+    console.log("opponent email: " + dest);
+    console.log("message: " + message);
+    await sendMessage({ sourceEmail: source, destEmail: dest, message: message });
   } catch (error) {
     console.log("Error sending message: ", error.message);
     throw new Error("Could not send message to user " + error.message);
