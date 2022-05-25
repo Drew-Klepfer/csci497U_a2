@@ -76,15 +76,17 @@ app.post("/games/:gameId", wrapAsync(async (req, res) => {
     changedIndex: req.body.changedIndex,
     playerMark: req.body.playerMark
   });
-  let opponentEmail
+  
+  let opponentUsername
   if (game.user1 !== game.lastMoveBy) {
-    opponentEmail = game.user1
+    opponentUsername = game.user1
   } else {
-    opponentEmail = game.user2
+    opponentUsername = game.user2
   }
-  const opponent = await fetchUserByEmail(opponentEmail);
+  const opponent = await fetchUserByEmail(opponentUsername);
   const mover = {
-    username: token['cognito:username']
+    username: token['cognito:username'],
+    email: token['email']
   }
   await handlePostMoveNotification({ game, mover, opponent })
   res.json(game);
