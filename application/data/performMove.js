@@ -4,7 +4,7 @@ const AWS = require("aws-sdk");
 AWS.config.update({region: 'us-west-2'});
 const documentClient = new AWS.DynamoDB.DocumentClient();
 
-const performMove = async ({ gameId, user, changedIndex, changedValue }) => {
+const performMove = async ({ gameId, user, changedIndex, playerMark}) => {
   if (changedIndex < 1 || changedIndex > 9) {
     throw new Error('Desired index out of bounds')
   }
@@ -13,11 +13,11 @@ const performMove = async ({ gameId, user, changedIndex, changedValue }) => {
     Key: {
       gameId: gameId
     },
-    UpdateExpression: `SET lastMoveBy = :user, gb${changedIndex} = :changedValue`,
+    UpdateExpression: `SET lastMoveBy = :user, gb${changedIndex} = :playerMark`,
     ConditionExpression: `(user1 = :user OR user2 = :user) AND lastMoveBy <> :user`,
     ExpressionAttributeValues: {
       ":user": user,
-      ':changedValue': changedValue
+      ":playerMark": playerMark
     },
     ReturnValues: "ALL_NEW"
   };

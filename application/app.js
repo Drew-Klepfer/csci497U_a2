@@ -29,7 +29,6 @@ app.post("/login", wrapAsync(async (req, res) => {
 app.post("/users", wrapAsync(async (req, res) => {
   const validated = validateCreateUser(req.body);
   if (!validated.valid) {
-    console.log("inside app.js line 32");
     throw new Error(validated.message);
   }
   const user = await createCognitoUser(
@@ -39,28 +38,6 @@ app.post("/users", wrapAsync(async (req, res) => {
   );
   res.json(user);
 }));
-
-/* // Create new game
-app.post("/games", wrapAsync(async (req, res) => {
-  console.log("in post req to start game");
-  const validated = validateCreateGame(req.body);
-  if (!validated.valid) {
-    console.log("inside app.js line 46");
-    throw new Error(validated.message);
-  }
-  const token = await verifyToken(req.header("Authorization"));
-  const opponent = await fetchUserByEmail(req.body.opponent);
-  
-
-  console.log("opponent username: " + opponent.username);
-  console.log("opponent email: " + opponent.email);
-
-  const game = await createGame({
-    creator: token["cognito:username"],
-    opponent: opponent
-  });
-  res.json(game);
-})); */
 
 // Create new game
 app.post("/games", wrapAsync(async (req, res) => {
@@ -93,18 +70,11 @@ app.post("/games/:gameId", wrapAsync(async (req, res) => {
 
   const token = await verifyToken(req.header("Authorization"));
 
-  if (user == user1) {
-    playerMark = 'X'
-  }
-  else{
-    playerMark ='O'
-  }
-
   const game = await performMove({
     gameId: req.params.gameId,
     user: token["cognito:username"],
     changedIndex: req.body.changedIndex,
-    changedValue: req.body.playerMark
+    playerMark: req.body.playerMark
   });
   let opponentEmail
   if (game.user1 !== game.lastMoveBy) {

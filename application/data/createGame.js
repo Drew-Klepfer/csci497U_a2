@@ -10,7 +10,7 @@ const createGame = async ({ creator, opponent }) => {
     TableName: "tic-tac-toe",
     Item: {
       gameId: uuidv4().split('-')[0],
-      user1: creator,
+      user1: creator.username,
       user2: opponent.username,
       gb1: null,
       gb2: null,
@@ -21,8 +21,7 @@ const createGame = async ({ creator, opponent }) => {
       gb7: null,
       gb8: null,
       gb9: null,
-      lastMoveBy: creator,
-      playerMark: "X"
+      lastMoveBy: creator.username
     }
   };
 
@@ -37,9 +36,12 @@ const createGame = async ({ creator, opponent }) => {
   const source = `${creator.email}`;
   const dest = `${opponent.email}`;
   try {
-    console.log("creator email: " + source);
+
+    //testing
+    /* console.log("creator email: " + source);
     console.log("opponent email: " + dest);
-    console.log("message: " + message);
+    console.log("message: " + message); */
+
     await sendMessage({ sourceEmail: source, destEmail: dest, message: message });
   } catch (error) {
     console.log("Error sending message: ", error.message);
